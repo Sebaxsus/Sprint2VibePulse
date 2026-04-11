@@ -215,3 +215,9 @@ GET  /api/categories/:slug
 - Nombres de campos en español (UI) y camelCase (código)
 - Mock data compartida en `services/mockData.ts`
 - Variables CSS globales con prefijo `--vp-`
+
+### Pruebas :)
+
+![](./DOC/Media/PruebaCatalogo.png)
+
+![](./DOC/Media/ConfirmacionDB.png)

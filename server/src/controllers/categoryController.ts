@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prismaConnector as prisma } from '../../db'
 
 // GET /api/categories
 export const getCategories = async (_req: Request, res: Response): Promise<void> => {

@@ -10,8 +10,9 @@
     "install:all": "pnpm install && cd client && pnpm install && cd ../server && pnpm install",
     "build": "cd client && pnpm run build && cd ../server && pnpm run build",
     "prisma:migrate": "cd server && npx prisma migrate dev",
-    "prisma:seed": "cd server && pnpm run prisma:seed",
-    "prisma:studio": "cd server && npx prisma studio"
+    "prisma:seed": "cd server && npx prisma db seed",
+    "prisma:studio": "cd server && npx prisma studio",
+    "prisma:generate": "cd server && npx prisma generate"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"

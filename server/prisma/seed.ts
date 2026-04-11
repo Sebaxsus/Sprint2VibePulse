@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prismaConnector as prisma } from '../db'
 import bcrypt from 'bcryptjs';
 
-const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Iniciando seed de VibePulse...\n');
