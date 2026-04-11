@@ -1,0 +1,96 @@
+[ROL]
+Actúa como un desarrollador senior en Front-end enfocado en UI/UX.
+[CONTEXTO]
+Debes hacer un sprint que equivale a una parte de una aplicacion entera, Cada sprint esta separado por grupos y tu grupo hace el Sprint #2 Que se encarga solamente de La pagina Principal y el catalogo.
+
+El stack a usar es:
+Frontend
+* React
+* Vite
+* TypeScript
+ Backend
+* Node.js
+* Express
+* TypeScript
+Base de datos
+* PostgreSQL
+ORM
+* Prisma
+[TAREA]
+SPRINT 2 — PÁGINA PRINCIPAL Y CATÁLOGO
+Objetivo
+Mostrar una experiencia de navegación atractiva para el cliente, con acceso a productos, categorías y catálogo general.
+Alcance
+* Home
+* Hero principal
+* secciones promocionales
+* catálogo
+* navegación hacia detalle de producto
+Criterios de aceptación
+1. El usuario puede visualizar la página principal después de iniciar sesión como cliente.
+2. La página principal muestra un hero o banner principal con mensaje promocional.
+3. El hero incluye al menos un botón de llamada a la acción, por ejemplo “Comprar ahora”.
+4. El botón principal del hero redirige al catálogo.
+5. La página principal muestra al menos una sección de productos destacados.
+6. La página principal muestra al menos una sección de categorías.
+7. La página principal muestra promociones u ofertas visibles.
+8. El menú de navegación está visible y es funcional.
+9. El usuario puede acceder al catálogo desde la página principal.
+10. El catálogo muestra productos en formato grid.
+11. Cada producto del catálogo muestra imagen, nombre y precio.
+12. Cada producto tiene una acción visible para ver detalle o interactuar.
+13. El usuario puede seleccionar un producto desde el catálogo.
+14. Al seleccionar un producto, el sistema redirige a la vista de detalle.
+15. El catálogo puede mostrar varias categorías de productos sin romper el diseño.
+16. Si no hay productos disponibles, el sistema muestra un mensaje adecuado.
+17. El catálogo no duplica productos de forma incorrecta.
+18. Las imágenes de los productos cargan correctamente.
+19. El diseño se ve prioritariamente como página web de escritorio, no como app móvil.
+20. La interfaz está completamente en español.
+21. Los botones y enlaces principales muestran estados visuales al pasar el cursor.
+22. El contenido mantiene consistencia visual con el sistema general.
+23. El layout soporta diferentes cantidades de productos sin desordenarse.
+24. El usuario puede navegar entre home y catálogo sin errores.
+25. La vista se adapta a resoluciones menores sin perder estructura principal.
+[RESTRICCIONES]
+Teniendo en cuenta lo siguiente:
+* misma paleta de colores
+* misma tipografía
+* mismos nombres de pantallas
+* mismos nombres de botones principales
+* mismos nombres de campos
+* estructura de navegación acordada
+* datos simulados o mock data comunes
+* rutas o vistas base definidas desde el comienzo
+Convenciones obligatorias
+* Todo el código en TypeScript
+* Usar React + Vite
+* No cambiar librerías base
+[FORMATO]
+Prisma
+En tu schema.prisma deben existir mínimo:
+model User {   id        Int     @id @default(autoincrement())   name      String   email     String  @unique   password  String   role      Role } enum Role {   CLIENT   ADMIN }
+Estas son las estrucutras
+ecommerce-vibe-pulse/ 
+├── client/                     # React + Vite + TS 
+│   ├── src/ 
+│   │   ├── components/ 
+│   │   ├── pages/ 
+│   │   ├── layouts/
+ │   │   ├── services/ 
+│   │   ├── hooks/
+ │   │   ├── types/
+ │   │   └── routes/
+ │ ├── server/                     # Node + Express + TS 
+│   ├── src/
+ │   │   ├── controllers/
+ │   │   ├── routes/ 
+│   │   ├── services/ 
+│   │   ├── middleware/ 
+│   │   └── config/ 
+│ ├── prisma/
+ │   └── schema.prisma 
+│ └── README.md
+
+Layout de la pagina en stitch:
+https://stitch.withgoogle.com/projects/4591858935545205753
