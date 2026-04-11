@@ -54,6 +54,12 @@ npm run build
 npm run dev
 ```
 
+Health check esperado del backend:
+
+- `http://localhost:3001/api/health`
+
+Si abres `http://localhost:3001/` y sale `{"success":false,"message":"Ruta no encontrada"}` no es error de arranque, solo ruta fuera del prefijo `/api`.
+
 ## Problemas comunes
 
 - `P1001` (cannot reach db): puerto incorrecto o Postgres apagado.

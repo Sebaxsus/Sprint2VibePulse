@@ -122,6 +122,18 @@ npm run dev:client   # React + Vite en http://localhost:5173
 npm run dev:server   # API en http://localhost:3001
 ```
 
+Health check correcto del backend:
+
+- `http://localhost:3001/api/health`
+
+Si visitas `http://localhost:3001/` veras:
+
+```json
+{"success":false,"message":"Ruta no encontrada"}
+```
+
+Eso es esperado porque la API expone rutas bajo prefijo `/api`.
+
 ## 🧪 Calidad
 
 ```bash
