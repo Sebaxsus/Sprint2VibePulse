@@ -59,6 +59,14 @@ npm run dev
 - `P1001` (cannot reach db): puerto incorrecto o Postgres apagado.
 - `P1000` (auth failed): usuario/password incorrectos en `DATABASE_URL`.
 - Seed falla por hash: falta `SEED_USER_PASSWORD_HASH` en `server/.env`.
+- `EADDRINUSE:3001`: ya hay un proceso usando la API.
+
+Si ves `EADDRINUSE` en Windows:
+
+```bash
+netstat -ano | findstr :3001
+taskkill /PID <PID> /F
+```
 
 ## Seguridad minima
 
