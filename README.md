@@ -1,217 +1,163 @@
-# ⚡ VibePulse — Sprint 2: Página Principal y Catálogo
+# ⚡ VibePulse - Sprint 2 Base del Equipo
 
-> E-commerce moderno construido con React + Vite + TypeScript en el frontend, Node.js + Express + TypeScript en el backend, PostgreSQL como base de datos y Prisma como ORM.
+Proyecto academico de **E-commerce web de ropa juvenil**.  
+Este repositorio contiene la base tecnica para el Sprint 2 (Home + Catalogo), preparada para trabajo por equipo con arquitectura limpia, flujo de issues y PRs controlado.
 
----
+## 🎯 Objetivo de esta base
 
-## 📁 Estructura del Proyecto
+- Estandarizar arquitectura y entorno para que cada persona implemente su tarea sin romper integracion.
+- Reducir deuda tecnica del codigo legacy.
+- Dejar reglas claras de colaboracion para revisar en `dev` antes de cualquier merge final.
 
-```
+## 🧱 Stack oficial
+
+### Frontend
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+
+## ✅ Por que React + Vite
+
+- Vite: arranque rapido, hot reload inmediato, configuracion simple para trabajo modular.
+- React: componentes reutilizables y separacion por pantallas para repartir tareas por sprint.
+- TypeScript: tipado fuerte, menos errores en integracion, mejor contrato entre equipos.
+
+## ✅ Por que se estandarizo Tailwind (y no CSS legacy)
+
+- El codigo legacy tenia estilos dispersos y repetidos, lo que elevaba costo de mantenimiento.
+- Tailwind acelera desarrollo por tareas cortas y reduce conflictos de estilos en PRs paralelos.
+- Permite que diseno base, spacing, tipografia y colores se apliquen con consistencia.
+- Facilita code review: se ve rapido si un componente respeta o no el design system.
+
+Tailwind **no cambia la estructura de tecnologias del proyecto** porque el enunciado no obliga una herramienta especifica de estilos.
+Se mantiene intacto el stack oficial y solo se optimiza la capa visual para mejorar velocidad y mantenibilidad.
+
+> Nota: existen archivos legacy en CSS Modules que se iran migrando por etapas. Desde este punto, el **estandar para nuevos cambios es Tailwind**.
+
+## 📁 Estructura principal
+
+```txt
 ecommerce-vibe-pulse/
-├── client/                          # React + Vite + TypeScript
+├── client/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── catalog/
-│   │   │   │   ├── ProductCard.tsx        # Tarjeta de producto
-│   │   │   │   ├── ProductCard.module.css
-│   │   │   │   ├── ProductGrid.tsx        # Grid con skeleton loader
-│   │   │   │   ├── ProductGrid.module.css
-│   │   │   │   ├── CatalogFilters.tsx     # Sidebar de filtros
-│   │   │   │   └── CatalogFilters.module.css
 │   │   ├── pages/
-│   │   │   ├── HomePage.tsx              # Página principal
-│   │   │   ├── HomePage.module.css
-│   │   │   ├── CatalogPage.tsx           # Catálogo con filtros
-│   │   │   ├── CatalogPage.module.css
-│   │   │   ├── ProductDetailPage.tsx     # Detalle de producto
-│   │   │   └── ProductDetailPage.module.css
 │   │   ├── layouts/
-│   │   │   ├── MainLayout.tsx            # Navbar + Footer
-│   │   │   └── MainLayout.module.css
 │   │   ├── routes/
-│   │   │   └── AppRouter.tsx             # React Router v6
 │   │   ├── services/
-│   │   │   ├── mockData.ts               # Mock data (12 productos, 6 categorías)
-│   │   │   └── productService.ts         # Servicios con simulación de API
 │   │   ├── hooks/
-│   │   │   └── useProducts.ts            # Custom hooks React
-│   │   ├── types/
-│   │   │   └── index.ts                  # TypeScript interfaces
 │   │   ├── styles/
-│   │   │   └── global.css                # Tokens globales + reset
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   ├── index.html
-│   ├── vite.config.ts
-│   ├── tsconfig.json
-│   └── package.json
-│
-├── server/                          # Node.js + Express + TypeScript
+│   │   └── types/
+│   ├── tailwind.config.cjs
+│   ├── postcss.config.cjs
+│   └── vite.config.ts
+├── server/
 │   ├── src/
+│   │   ├── config/
 │   │   ├── controllers/
-│   │   │   ├── productController.ts      # CRUD productos
-│   │   │   └── categoryController.ts     # CRUD categorías
+│   │   ├── services/
 │   │   ├── routes/
-│   │   │   ├── products.ts
-│   │   │   └── categories.ts
-│   │   ├── middleware/
-│   │   │   └── auth.ts                   # JWT middleware
-│   │   ├── app.ts                        # Express setup
-│   │   └── index.ts                      # Entry point
-│   ├── tsconfig.json
-│   └── package.json
-│
+│   │   └── middleware/
+│   └── .env.example
 ├── prisma/
-│   ├── schema.prisma                     # Modelos DB
-│   └── seed.ts                           # Datos iniciales
-│
-├── package.json                          # Scripts raíz (monorepo)
-└── README.md
+└── docs/
 ```
 
----
+## 🚀 Setup rapido
 
-## 🚀 Instalación y Ejecución
-
-### 1. Prerrequisitos
-
+### 1) Requisitos
 - Node.js 18+
-- PostgreSQL corriendo localmente (puerto 5432)
-- npm, pnpm, bun o yarn
+- PostgreSQL local
 
-### 2. Clonar e instalar dependencias
+### 2) Instalar dependencias
 
 ```bash
-# Instalar todas las dependencias (raíz + client + server)
-pnpm run install:all
+npm run install:all
 ```
 
-### 3. Variables de entorno
+### 3) Variables de entorno
 
-Crear `server/.env`:
+Copiar `server/.env.example` a `server/.env` y completar:
 
 ```env
-DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/vibepulse_db"
-JWT_SECRET="vibe-pulse-super-secret-2025"
+DATABASE_URL="postgresql://usuario:password@localhost:5432/vibepulse_db"
+JWT_SECRET="cambia-este-secreto-en-produccion"
 PORT=3001
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
 ```
 
-### 4. Base de datos
+### 4) Base de datos
 
 ```bash
-# Crear DB y correr migraciones
-pnpm run prisma:migrate
-
-# Poblar con datos de prueba
-pnpm run prisma:seed
+npm run prisma:migrate
+npm run prisma:seed
 ```
 
-### 5. Iniciar en desarrollo
+### 5) Desarrollo
 
 ```bash
-# Levanta cliente (puerto 5173) y servidor (puerto 3001) simultáneamente
-pnpm run dev
+npm run dev
 ```
 
-O por separado:
+Por separado:
 
 ```bash
-pnpm run dev:client   # → http://localhost:5173
-pnpm run dev:server   # → http://localhost:3001
+npm run dev:client   # React + Vite en http://localhost:5173
+npm run dev:server   # API en http://localhost:3001
 ```
 
----
+## 🧪 Calidad
 
-## 🎨 Sistema de Diseño
-
-### Paleta de Colores
-
-| Token               | Valor       | Uso                          |
-|---------------------|-------------|------------------------------|
-| `--vp-primary`      | `#FF4757`   | Rojo coral — CTAs, acentos   |
-| `--vp-secondary`    | `#2F3542`   | Gris oscuro — hero, footer   |
-| `--vp-accent`       | `#FFA502`   | Ámbar — badges, alertas      |
-| `--vp-bg`           | `#FAFAF9`   | Fondo general                |
-| `--vp-text`         | `#1A1A2E`   | Texto principal              |
-
-### Tipografía
-
-- **Display**: `Syne` (700–800) — Títulos y headings
-- **Body**: `DM Sans` (400–600) — Texto general, UI
-
-### Rutas
-
-| Ruta             | Página                  |
-|------------------|-------------------------|
-| `/`              | Página Principal (Home) |
-| `/catalogo`      | Catálogo completo       |
-| `/catalogo?categoryId=1` | Catálogo filtrado |
-| `/catalogo?search=query` | Búsqueda        |
-| `/producto/:id`  | Detalle de producto     |
-
----
-
-## ✅ Criterios de Aceptación Cubiertos
-
-| #  | Criterio                                                        | Estado |
-|----|-----------------------------------------------------------------|--------|
-| 1  | Usuario puede visualizar la página principal                    | ✅     |
-| 2  | Hero con mensaje promocional                                    | ✅     |
-| 3  | Hero con botón de llamada a la acción                           | ✅     |
-| 4  | Botón "Comprar ahora" redirige al catálogo                      | ✅     |
-| 5  | Sección de productos destacados                                 | ✅     |
-| 6  | Sección de categorías                                           | ✅     |
-| 7  | Promociones u ofertas visibles (3 banners rotativos)            | ✅     |
-| 8  | Menú de navegación visible y funcional                          | ✅     |
-| 9  | Acceso al catálogo desde el home                                | ✅     |
-| 10 | Catálogo en formato grid                                        | ✅     |
-| 11 | Producto muestra imagen, nombre y precio                        | ✅     |
-| 12 | Acción visible para ver detalle                                 | ✅     |
-| 13 | Usuario puede seleccionar un producto                           | ✅     |
-| 14 | Redirige a vista de detalle                                     | ✅     |
-| 15 | Catálogo muestra varias categorías sin romper diseño            | ✅     |
-| 16 | Mensaje adecuado si no hay productos                            | ✅     |
-| 17 | No duplica productos                                            | ✅     |
-| 18 | Imágenes cargan correctamente (con fallback)                    | ✅     |
-| 19 | Diseño prioritariamente de escritorio                           | ✅     |
-| 20 | Interfaz completamente en español                               | ✅     |
-| 21 | Estados visuales al pasar el cursor (hover)                     | ✅     |
-| 22 | Consistencia visual con el sistema general                      | ✅     |
-| 23 | Layout soporta diferentes cantidades de productos               | ✅     |
-| 24 | Navegación entre home y catálogo sin errores                    | ✅     |
-| 25 | Se adapta a resoluciones menores                                | ✅     |
-
----
-
-## 🔌 API Endpoints (Backend)
-
-```
-GET  /api/health
-GET  /api/products?categoryId=&search=&minPrice=&maxPrice=&featured=&page=&limit=
-GET  /api/products/featured
-GET  /api/products/:id
-GET  /api/categories
-GET  /api/categories/:slug
+```bash
+npm run lint
+npm run build
 ```
 
----
+## 🗄️ Herramienta recomendada para DB
 
-## 👤 Usuarios de Prueba (Seed)
+Se prioriza **TablePlus** sobre pgAdmin para este sprint:
 
-| Rol    | Email                      | Contraseña    |
-|--------|----------------------------|---------------|
-| ADMIN  | admin@vibepulse.com        | password123   |
-| CLIENT | cliente@vibepulse.com      | password123   |
+- Menos pesada y mas rapida para consultas puntuales.
+- UI mas simple para estudiantes cuando se trabaja por tareas cortas.
+- Mejor flujo para revisar tablas y datos seed sin sobrecargar la maquina.
 
----
+Guia: `docs/DB_TOOLING_TABLEPLUS.md`
 
-## 🤝 Convenciones del Equipo
+## 🔀 Flujo de trabajo con Issues y PR
 
-- Todo el código en **TypeScript** estricto
-- CSS con **CSS Modules** (`.module.css`)
-- Nombres de rutas: `/`, `/catalogo`, `/producto/:id`
-- Nombres de campos en español (UI) y camelCase (código)
-- Mock data compartida en `services/mockData.ts`
-- Variables CSS globales con prefijo `--vp-`
+1. Tomar una issue asignada (`#N`).
+2. Crear rama desde `dev`.
+3. Implementar solo el alcance de la issue.
+4. Abrir PR contra `dev` con referencia `Closes #N`.
+5. Esperar revision del lider tecnico.
+
+⚠️ Regla estricta: **no hacer merge directo**. Solo PR para revision.
+
+Guia completa: `docs/GIT_ISSUES_PR_FLOW.md`
+
+## 👥 Distribucion del Sprint 2
+
+- Persona 1 - Santiago Rodriguez (lider tecnico)
+- Persona 2 - Sebastian Ussa
+- Persona 3 - Emmanuel Avellaneda
+- Persona 4 - Alessandri
+- Persona 5 - Sebastian Garcia
+
+Issues por persona: documentos locales del lider tecnico (no versionados).
+
+## 📚 Documentacion clave
+
+- `docs/SPRINT2_BASE_ARCHITECTURE.md`
+- `docs/LEGACY_REFACTOR_REPORT.md`
+- `docs/TAILWIND_MIGRATION_DECISION.md`
+- `docs/DB_TOOLING_TABLEPLUS.md`
+- `docs/GIT_ISSUES_PR_FLOW.md`
