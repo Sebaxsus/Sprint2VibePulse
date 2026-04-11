@@ -169,3 +169,4 @@ Issues por persona: documentos locales del lider tecnico (no versionados).
 - `docs/DB_TOOLING_TABLEPLUS.md`
 - `docs/GIT_ISSUES_PR_FLOW.md`
 - `docs/SEED_Y_ENTORNO_SEGURO.md`
+- `docs/IA_CLI_RECOMENDADA.md`
