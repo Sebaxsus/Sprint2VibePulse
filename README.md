@@ -90,9 +90,16 @@ Copiar `server/.env.example` a `server/.env` y completar:
 ```env
 DATABASE_URL="postgresql://usuario:password@localhost:5432/vibepulse_db"
 JWT_SECRET="cambia-este-secreto-en-produccion"
+SEED_USER_PASSWORD_HASH="$2a$10$REEMPLAZA_ESTE_HASH_BCRYPT"
 PORT=3001
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
+```
+
+Generar hash bcrypt para `SEED_USER_PASSWORD_HASH`:
+
+```bash
+node -e "console.log(require('./server/node_modules/bcryptjs').hashSync('tuPasswordSegura',10))"
 ```
 
 ### 4) Base de datos
@@ -161,3 +168,4 @@ Issues por persona: documentos locales del lider tecnico (no versionados).
 - `docs/TAILWIND_MIGRATION_DECISION.md`
 - `docs/DB_TOOLING_TABLEPLUS.md`
 - `docs/GIT_ISSUES_PR_FLOW.md`
+- `docs/SEED_Y_ENTORNO_SEGURO.md`
