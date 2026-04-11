@@ -1,4 +1,4 @@
-import { Product, Category, ProductFilters, PaginatedResponse, ApiResponse } from '../types';
+import { Product, Category, ProductFilters, PaginatedResponse } from '../types';
 import {
   MOCK_PRODUCTS,
   MOCK_CATEGORIES,

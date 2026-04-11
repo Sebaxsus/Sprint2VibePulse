@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './MainLayout.module.css';
+import { ROUTES, catalogQuery } from '../routes/paths';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -26,24 +27,28 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/catalogo?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(catalogQuery.search(searchQuery.trim()));
       setSearchQuery('');
     }
   };
 
   const navLinks = [
-    { to: '/', label: 'Inicio' },
-    { to: '/catalogo', label: 'Catálogo' },
-    { to: '/catalogo?categoryId=1', label: 'Electrónica' },
-    { to: '/catalogo?categoryId=2', label: 'Moda' },
-    { to: '/catalogo?categoryId=4', label: 'Deporte' },
+    { to: ROUTES.home, label: 'Inicio' },
+    { to: ROUTES.catalog, label: 'Catálogo' },
   ];
+
+  const isNavLinkActive = (to: string) => {
+    if (to === ROUTES.home) {
+      return location.pathname === ROUTES.home;
+    }
+    return location.pathname.startsWith(to);
+  };
 
   return (
     <div className={styles.wrapper}>
       <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>
         <nav className={styles.nav}>
-          <Link to="/" className={styles.brand}>
+          <Link to={ROUTES.home} className={styles.brand}>
             <span className={styles.brandIcon}>⚡</span>
             <span className={styles.brandText}>Vibe<strong>Pulse</strong></span>
           </Link>
@@ -53,7 +58,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className={`${styles.navLink} ${location.pathname === link.to ? styles.navLinkActive : ''}`}
+                    className={`${styles.navLink} ${isNavLinkActive(link.to) ? styles.navLinkActive : ''}`}
                 >
                   {link.label}
                 </Link>
@@ -110,7 +115,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <div className={styles.footerBrand}>
-            <Link to="/" className={styles.brand}>
+            <Link to={ROUTES.home} className={styles.brand}>
               <span className={styles.brandIcon}>⚡</span>
               <span className={styles.brandText}>Vibe<strong>Pulse</strong></span>
             </Link>
@@ -123,18 +128,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div>
               <h4>Tienda</h4>
               <ul>
-                <li><Link to="/catalogo">Catálogo</Link></li>
-                <li><Link to="/catalogo?featured=true">Destacados</Link></li>
-                <li><Link to="/catalogo?categoryId=1">Electrónica</Link></li>
-                <li><Link to="/catalogo?categoryId=2">Moda</Link></li>
+                <li><Link to={ROUTES.catalog}>Catálogo</Link></li>
+                <li><Link to={catalogQuery.featured}>Destacados</Link></li>
               </ul>
             </div>
             <div>
               <h4>Ayuda</h4>
               <ul>
-                <li><a href="#">Preguntas frecuentes</a></li>
-                <li><a href="#">Envíos y devoluciones</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="mailto:soporte@vibepulse.com">Preguntas frecuentes</a></li>
+                <li><a href="mailto:soporte@vibepulse.com">Envíos y devoluciones</a></li>
+                <li><a href="mailto:soporte@vibepulse.com">Contacto</a></li>
               </ul>
             </div>
           </div>

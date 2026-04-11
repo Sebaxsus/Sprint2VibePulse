@@ -4,6 +4,7 @@ import { useFeaturedProducts, useCategories } from '../hooks/useProducts';
 import { MOCK_PROMOTIONS, formatPrice } from '../services/mockData';
 import ProductGrid from '../components/catalog/ProductGrid';
 import styles from './HomePage.module.css';
+import { ROUTES, catalogQuery } from '../routes/paths';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -37,12 +38,12 @@ const HomePage: React.FC = () => {
               ahora
             </h1>
             <p className={styles.heroSubtitle}>
-              Los mejores productos de electrónica, moda y más — con los mejores precios del mercado.
+              Looks juveniles y accesorios con estilo urbano para cada plan de tu semana.
             </p>
             <div className={styles.heroActions}>
               <button
                 className={styles.heroCta}
-                onClick={() => navigate('/catalogo')}
+                onClick={() => navigate(ROUTES.catalog)}
               >
                 Comprar ahora
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -51,7 +52,7 @@ const HomePage: React.FC = () => {
               </button>
               <button
                 className={styles.heroCtaSecondary}
-                onClick={() => navigate('/catalogo?featured=true')}
+                onClick={() => navigate(catalogQuery.featured)}
               >
                 Ver destacados
               </button>
@@ -69,7 +70,7 @@ const HomePage: React.FC = () => {
               <div className={styles.heroStatDivider} />
               <div className={styles.heroStat}>
                 <span className={styles.heroStatNum}>24h</span>
-                <span className={styles.heroStatLabel}>Envío rápido</span>
+                <span className={styles.heroStatLabel}>Nuevos drops</span>
               </div>
             </div>
           </div>
@@ -81,7 +82,7 @@ const HomePage: React.FC = () => {
                 className={styles.heroImage}
               />
               <div className={styles.heroPriceTag}>
-                <span className={styles.heroPriceLabel}>Smartwatch Serie 8</span>
+                <span className={styles.heroPriceLabel}>Chaqueta oversized denim</span>
                 <span className={styles.heroPriceValue}>{formatPrice(549900)}</span>
               </div>
               <div className={styles.heroRatingTag}>
@@ -108,9 +109,9 @@ const HomePage: React.FC = () => {
               <p className={styles.promoSubtitle}>{promo.subtitle}</p>
               <button
                 className={styles.promoCta}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(promo.ctaLink);
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(promo.ctaLink);
                 }}
               >
                 {promo.ctaText} →
@@ -130,7 +131,7 @@ const HomePage: React.FC = () => {
             </div>
             <button
               className={styles.sectionLink}
-              onClick={() => navigate('/catalogo')}
+              onClick={() => navigate(ROUTES.catalog)}
             >
               Ver todo el catálogo →
             </button>
@@ -147,7 +148,7 @@ const HomePage: React.FC = () => {
                 <button
                   key={cat.id}
                   className={styles.categoryCard}
-                  onClick={() => navigate(`/catalogo?categoryId=${cat.id}`)}
+                  onClick={() => navigate(catalogQuery.byCategory(cat.id))}
                 >
                   <div className={styles.categoryImgWrap}>
                     <img
@@ -179,7 +180,7 @@ const HomePage: React.FC = () => {
             </div>
             <button
               className={styles.sectionLink}
-              onClick={() => navigate('/catalogo?featured=true')}
+              onClick={() => navigate(catalogQuery.featured)}
             >
               Ver todos →
             </button>
@@ -198,15 +199,15 @@ const HomePage: React.FC = () => {
       <section className={styles.flashSection}>
         <div className={styles.flashInner}>
           <div className={styles.flashText}>
-            <span className={styles.flashTag}>⚡ FLASH SALE</span>
-            <h2 className={styles.flashTitle}>Hasta 40% OFF en electrónica</h2>
+            <span className={styles.flashTag}>⚡ OFERTA FLASH</span>
+            <h2 className={styles.flashTitle}>Hasta 40% OFF en prendas urbanas</h2>
             <p className={styles.flashSubtitle}>Oferta por tiempo limitado. ¡No te la pierdas!</p>
           </div>
           <button
             className={styles.flashCta}
-            onClick={() => navigate('/catalogo?categoryId=1')}
+            onClick={() => navigate(catalogQuery.byCategory(1))}
           >
-            Ver ofertas de electrónica
+            Ver ofertas destacadas
           </button>
         </div>
       </section>

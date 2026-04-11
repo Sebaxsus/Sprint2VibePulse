@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useProduct } from '../hooks/useProducts';
 import { formatPrice, getDiscountPercentage, MOCK_PRODUCTS } from '../services/mockData';
 import ProductGrid from '../components/catalog/ProductGrid';
 import styles from './ProductDetailPage.module.css';
+import { ROUTES, catalogQuery } from '../routes/paths';
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -38,7 +39,7 @@ const ProductDetailPage: React.FC = () => {
           <span className={styles.notFoundIcon}>🔍</span>
           <h2>Producto no encontrado</h2>
           <p>El producto que buscas no existe o fue removido.</p>
-          <button className={styles.backBtn} onClick={() => navigate('/catalogo')}>
+          <button className={styles.backBtn} onClick={() => navigate(ROUTES.catalog)}>
             ← Volver al catálogo
           </button>
         </div>
@@ -49,21 +50,22 @@ const ProductDetailPage: React.FC = () => {
   const discount = product.comparePrice
     ? getDiscountPercentage(product.price, product.comparePrice)
     : null;
+  const categoryId = product.category?.id ?? product.categoryId;
 
   return (
     <div className={styles.page}>
       {/* BREADCRUMB */}
       <nav className={styles.breadcrumb}>
         <div className={styles.breadcrumbInner}>
-          <a href="/">Inicio</a>
+          <Link to={ROUTES.home}>Inicio</Link>
           <span>/</span>
-          <a href="/catalogo">Catálogo</a>
+          <Link to={ROUTES.catalog}>Catálogo</Link>
           <span>/</span>
           {product.category && (
             <>
-              <a href={`/catalogo?categoryId=${product.category.id}`}>
+              <Link to={catalogQuery.byCategory(product.category.id)}>
                 {product.category.name}
-              </a>
+              </Link>
               <span>/</span>
             </>
           )}
@@ -99,7 +101,7 @@ const ProductDetailPage: React.FC = () => {
           {product.category && (
             <button
               className={styles.categoryLink}
-              onClick={() => navigate(`/catalogo?categoryId=${product.category!.id}`)}
+              onClick={() => navigate(catalogQuery.byCategory(categoryId))}
             >
               {product.category.name}
             </button>
@@ -149,14 +151,13 @@ const ProductDetailPage: React.FC = () => {
           <div className={styles.actions}>
             <button
               className={styles.addToCart}
-              disabled={product.stock === 0}
-              onClick={() => alert('Funcionalidad de carrito — Sprint 3')}
+              disabled
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
-              {product.stock === 0 ? 'Agotado' : 'Agregar al carrito'}
+              Disponible en Sprint 3
             </button>
             <button
               className={styles.wishlistBtn}
@@ -186,7 +187,7 @@ const ProductDetailPage: React.FC = () => {
 
           <button
             className={styles.backToCatalog}
-            onClick={() => navigate('/catalogo')}
+            onClick={() => navigate(ROUTES.catalog)}
           >
             ← Volver al catálogo
           </button>

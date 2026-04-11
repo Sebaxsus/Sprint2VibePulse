@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useProducts, useCategories } from '../hooks/useProducts';
 import { ProductFilters } from '../types';
 import ProductGrid from '../components/catalog/ProductGrid';
 import CatalogFilters from '../components/catalog/CatalogFilters';
 import styles from './CatalogPage.module.css';
+import { ROUTES } from '../routes/paths';
 
 const SORT_OPTIONS = [
   { value: 'default', label: 'Relevancia' },
@@ -43,7 +44,7 @@ const CatalogPage: React.FC = () => {
       search: search ?? undefined,
       featured: featured === 'true' ? true : undefined,
     });
-  }, [searchParams]);
+  }, [searchParams, updateFilters]);
 
   const handleFilterChange = (newFilters: Partial<ProductFilters>) => {
     updateFilters(newFilters);
@@ -76,7 +77,7 @@ const CatalogPage: React.FC = () => {
       <div className={styles.breadcrumbBar}>
         <div className={styles.breadcrumbInner}>
           <nav className={styles.breadcrumb} aria-label="Navegación">
-            <a href="/">Inicio</a>
+            <Link to={ROUTES.home}>Inicio</Link>
             <span>/</span>
             <span>Catálogo</span>
             {activeCategoryName && (
