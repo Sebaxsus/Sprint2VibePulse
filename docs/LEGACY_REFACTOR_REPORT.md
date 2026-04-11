@@ -15,9 +15,10 @@ El codigo inicial del sprint funcionaba para demo, pero tenia riesgos de integra
 
 ### Frontend
 - Rutas centralizadas en `client/src/routes/paths.ts`.
-- Setup de Tailwind (`client/tailwind.config.js`, `client/postcss.config.js`).
+- Setup de Tailwind (`client/tailwind.config.cjs`, `client/postcss.config.cjs`).
 - Tokens y base global mantenidos en `client/src/styles/global.css`.
 - Limpieza de navegacion para evitar recargas innecesarias.
+- Limpieza de archivos residuales fuera de alcance funcional (`Prompt.txt` eliminado de raiz).
 
 ### Backend
 - Prisma singleton en `server/src/config/prisma.ts`.
