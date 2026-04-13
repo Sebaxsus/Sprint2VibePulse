@@ -64,6 +64,7 @@ const HomePage: React.FC = () => {
                 <span className="font-display text-2xl font-extrabold text-white">500+</span>
                 <span className="text-xs text-white/60">Productos</span>
               </div>
+<<<<<<< HEAD
               <div className="h-9 w-px bg-white/20" />
               <div className="flex flex-col gap-0.5">
                 <span className="font-display text-2xl font-extrabold text-white">{loadingCats ? '--' : categories.length}</span>
