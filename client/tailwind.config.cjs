@@ -24,6 +24,15 @@ module.exports = {
         'vp-md': '0 4px 16px rgba(0,0,0,0.10)',
         'vp-lg': '0 8px 32px rgba(0,0,0,0.12)',
       },
+      keyframes: {
+        gridItemIn: {
+          from: { opacity: '0', transform: 'translateY(10px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'grid-item': 'gridItemIn 360ms ease both',
+      },
     },
   },
   plugins: [],

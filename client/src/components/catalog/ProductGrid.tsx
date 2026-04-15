@@ -42,7 +42,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const staggerClass = (index: number) => {
     const delay = Math.min(index, 5) * 40;
     return {
-      animation: `gridItemIn 360ms ease ${delay}ms both`,
+      animationDelay: `${delay}ms`,
     } as React.CSSProperties;
   };
 
@@ -60,28 +60,31 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
   if (products.length === 0) {
     return (
-      <div className="col-span-full flex flex-col items-center gap-4 px-8 py-16 text-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-vp-text-light">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-          </svg>
+      <div className={gridClass}>
+        <div className="col-span-full flex flex-col items-center gap-4 px-8 py-16 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-vp-text-light">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+          </div>
+          <p className="max-w-md text-base text-vp-text-muted">{emptyMessage}</p>
         </div>
-        <p className="max-w-md text-base text-vp-text-muted">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <>
-      <style>{'@keyframes gridItemIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}'}</style>
-      <div className={gridClass}>
-        {products.map((product, index) => (
-          <div key={product.id} style={staggerClass(index)}>
-            <ProductCard product={product} variant={variant} />
-          </div>
-        ))}
-      </div>
-    </>
+    <div className={gridClass}>
+      {products.map((product, index) => (
+        <div
+          key={product.id}
+          className="animate-grid-item motion-reduce:animate-none"
+          style={staggerClass(index)}
+        >
+          <ProductCard product={product} variant={variant} />
+        </div>
+      ))}
+    </div>
   );
 };
 
