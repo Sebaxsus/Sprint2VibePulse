@@ -15,6 +15,12 @@
   border-color: var(--vp-border-hover);
 }
 
+.card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: var(--vp-shadow-lg);
+  border-color: var(--vp-border-hover);
+}
+
 .card:focus-visible {
   outline: 2px solid var(--vp-primary);
   outline-offset: 2px;
@@ -103,6 +109,11 @@
   transform: translateX(0);
 }
 
+.card:focus-within .quickActions {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .quickBtn {
   width: 32px;
   height: 32px;
@@ -122,6 +133,11 @@
   background: var(--vp-primary);
   border-color: var(--vp-primary);
   color: white;
+}
+
+.quickBtn:focus-visible {
+  outline: 2px solid var(--vp-primary);
+  outline-offset: 2px;
 }
 
 /* ===== INFO ===== */
@@ -207,6 +223,30 @@
 .ctaBtn:hover {
   background: var(--vp-primary);
   transform: translateY(-1px);
+}
+
+.ctaBtn:focus-visible {
+  outline: 2px solid var(--vp-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .image,
+  .quickActions,
+  .quickBtn,
+  .ctaBtn {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-within,
+  .card:hover .image,
+  .card:hover .quickActions,
+  .card:focus-within .quickActions,
+  .ctaBtn:hover {
+    transform: none;
+  }
 }
 
 /* ===== FEATURED VARIANT ===== */

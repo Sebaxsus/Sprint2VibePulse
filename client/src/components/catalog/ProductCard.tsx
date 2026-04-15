@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../../types';
 import { formatPrice, getDiscountPercentage } from '../../services/mockData';
+import { ROUTES } from '../../routes/paths';
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
@@ -13,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, variant = 'default' 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/producto/${product.id}`);
+    navigate(ROUTES.productDetail(product.id));
   };
 
   const discount =
@@ -28,7 +29,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, variant = 'default' 
       role="button"
       tabIndex={0}
       aria-label={`Ver detalle de ${product.name}`}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
     >
       <div className={styles.imageWrap}>
         <img
