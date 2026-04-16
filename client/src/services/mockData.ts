@@ -344,13 +344,13 @@ export const MOCK_PROMOTIONS = [
   },
   {
     id: 3,
-    title: 'Accesorios para tu outfit',
-    subtitle: 'Combina gorras y bolsos con 2x1 en productos seleccionados',
+    title: 'Semana de gorras 59FIFTY',
+    subtitle: 'Modelos White Sox, Athletics y Yankees con precio especial por tiempo limitado',
     badge: 'ESTILO TOTAL',
     bgColor: '#57606F',
     textColor: '#ffffff',
-    ctaText: 'Descubrir',
-    ctaLink: '/catalogo?categoryId=5',
+    ctaText: 'Ver gorras',
+    ctaLink: '/catalogo?categoryId=7',
     endsAt: null,
   },
 ];

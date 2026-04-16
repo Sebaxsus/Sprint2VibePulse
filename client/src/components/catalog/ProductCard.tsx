@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Product } from '../../types';
 import { formatPrice, getDiscountPercentage } from '../../services/mockData';
 import { ROUTES } from '../../routes/paths';
+import { IMAGE_FALLBACK_SRC, setImageFallback } from '../../utils/imageFallback';
 
 interface ProductCardProps {
   product: Product;
@@ -68,10 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, variant = 'default' 
           alt={product.name}
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
           loading="lazy"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src =
-              'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=500&q=80';
-          }}
+          onError={(event) => setImageFallback(event.currentTarget, IMAGE_FALLBACK_SRC)}
         />
         <div className="absolute left-2.5 top-2.5 flex flex-col gap-1">
           {product.badge && (
