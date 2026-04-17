@@ -5,7 +5,7 @@ import {
   getFeaturedProducts,
 } from '../controllers/productController';
 
-const router = Router();
+const router: Router = Router();
 
 // GET /api/products/featured  (debe ir ANTES de /:id)
 router.get('/featured', getFeaturedProducts);

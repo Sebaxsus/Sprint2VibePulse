@@ -1,7 +1,6 @@
 import React from 'react';
 import { Product } from '../../types';
 import ProductCard from './ProductCard';
-import styles from './ProductGrid.module.css';
 
 interface ProductGridProps {
   products: Product[];
@@ -12,14 +11,14 @@ interface ProductGridProps {
 }
 
 const SkeletonCard: React.FC = () => (
-  <div className={styles.skeleton}>
-    <div className={styles.skeletonImage} />
-    <div className={styles.skeletonInfo}>
-      <div className={styles.skeletonLine} style={{ width: '40%', height: '10px' }} />
-      <div className={styles.skeletonLine} style={{ width: '90%', height: '14px' }} />
-      <div className={styles.skeletonLine} style={{ width: '70%', height: '14px' }} />
-      <div className={styles.skeletonLine} style={{ width: '50%', height: '18px', marginTop: '4px' }} />
-      <div className={styles.skeletonLine} style={{ width: '100%', height: '36px', borderRadius: '8px', marginTop: '6px' }} />
+  <div className="overflow-hidden rounded-[12px] border border-black/10 bg-white">
+    <div className="aspect-[4/3] animate-pulse bg-gray-200" />
+    <div className="flex flex-col gap-2 p-4">
+      <div className="h-[10px] w-2/5 animate-pulse rounded bg-gray-200" />
+      <div className="h-[14px] w-[90%] animate-pulse rounded bg-gray-200" />
+      <div className="h-[14px] w-[70%] animate-pulse rounded bg-gray-200" />
+      <div className="mt-1 h-[18px] w-1/2 animate-pulse rounded bg-gray-200" />
+      <div className="mt-1.5 h-9 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
   </div>
 );
@@ -31,11 +30,29 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   variant = 'default',
   columns = 4,
 }) => {
+  const colsClass = {
+    2: 'grid-cols-2 max-[380px]:grid-cols-1',
+    3: 'grid-cols-3 max-[900px]:grid-cols-2 max-[380px]:grid-cols-1',
+    4: 'grid-cols-4 max-[1200px]:grid-cols-3 max-[900px]:grid-cols-2 max-[380px]:grid-cols-1',
+    5: 'grid-cols-5 max-[1200px]:grid-cols-4 max-[900px]:grid-cols-2 max-[380px]:grid-cols-1',
+  }[columns];
+
+  const gridClass = `grid items-stretch gap-6 max-[560px]:gap-4 ${colsClass}`;
+
+  const staggerClass = (index: number) => {
+    const delay = Math.min(index, 5) * 40;
+    return {
+      animationDelay: `${delay}ms`,
+    } as React.CSSProperties;
+  };
+
   if (loading) {
     return (
-      <div className={`${styles.grid} ${styles[`cols${columns}`]}`}>
+      <div className={gridClass}>
         {Array.from({ length: columns * 2 }).map((_, i) => (
-          <SkeletonCard key={i} />
+          <div key={i} style={staggerClass(i)}>
+            <SkeletonCard />
+          </div>
         ))}
       </div>
     );
@@ -43,21 +60,29 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
   if (products.length === 0) {
     return (
-      <div className={styles.empty}>
-        <div className={styles.emptyIcon}>
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-          </svg>
+      <div className={gridClass}>
+        <div className="col-span-full flex flex-col items-center gap-4 px-8 py-16 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-vp-text-light">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+          </div>
+          <p className="max-w-md text-base text-vp-text-muted">{emptyMessage}</p>
         </div>
-        <p className={styles.emptyText}>{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className={`${styles.grid} ${styles[`cols${columns}`]}`}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} variant={variant} />
+    <div className={gridClass}>
+      {products.map((product, index) => (
+        <div
+          key={product.id}
+          className="animate-grid-item motion-reduce:animate-none"
+          style={staggerClass(index)}
+        >
+          <ProductCard product={product} variant={variant} />
+        </div>
       ))}
     </div>
   );

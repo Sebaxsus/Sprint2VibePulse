@@ -1,6 +1,6 @@
-import { prismaConnector as prisma } from '../db'
-import bcrypt from 'bcryptjs';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Iniciando seed de VibePulse...\n');
@@ -8,7 +8,11 @@ async function main() {
   // ──────────────────────────────────────────
   // USUARIOS
   // ──────────────────────────────────────────
-  const hashedPassword = await bcrypt.hash('password123', 10);
+  const hashedPassword = process.env.SEED_USER_PASSWORD_HASH;
+
+  if (!hashedPassword) {
+    throw new Error('SEED_USER_PASSWORD_HASH no esta definido. Configuralo en server/.env antes de ejecutar prisma:seed.');
+  }
 
   await prisma.user.upsert({
     where: { email: 'admin@vibepulse.com' },
@@ -238,9 +242,6 @@ async function main() {
 
   console.log(`✅ ${products.length} productos creados`);
   console.log('\n🎉 Seed completado exitosamente!\n');
-  console.log('👤 Usuarios de prueba:');
-  console.log('   Admin   → admin@vibepulse.com   / password123');
-  console.log('   Cliente → cliente@vibepulse.com / password123\n');
 }
 
 main()

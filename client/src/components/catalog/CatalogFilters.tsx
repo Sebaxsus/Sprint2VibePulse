@@ -1,6 +1,5 @@
 import React from 'react';
 import { Category, ProductFilters } from '../../types';
-import styles from './CatalogFilters.module.css';
 
 interface CatalogFiltersProps {
   categories: Category[];
@@ -16,33 +15,45 @@ const CatalogFilters: React.FC<CatalogFiltersProps> = ({
   totalResults,
 }) => {
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.resultsCount}>
-        <span className={styles.count}>{totalResults}</span> productos encontrados
+    <aside className="space-y-6">
+      <div className="rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-vp-text-muted shadow-vp-sm">
+        <span className="text-lg font-bold text-vp-text">{totalResults}</span> productos encontrados
       </div>
 
       {/* Categorías */}
-      <div className={styles.filterGroup}>
-        <h3 className={styles.filterTitle}>Categorías</h3>
-        <ul className={styles.filterList}>
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold uppercase tracking-wide text-vp-text">Categorías</h3>
+        <ul className="space-y-1.5">
           <li>
             <button
-              className={`${styles.filterItem} ${!filters.categoryId ? styles.filterItemActive : ''}`}
+              className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition ${
+                !filters.categoryId
+                  ? 'bg-vp-primary/10 text-vp-primary ring-1 ring-vp-primary/30'
+                  : 'text-vp-text hover:bg-gray-100'
+              }`}
               onClick={() => onFilterChange({ categoryId: undefined })}
             >
               <span>Todas las categorías</span>
-              <span className={styles.filterBadge}>{totalResults}</span>
+              <span className="rounded-full bg-black/5 px-2 py-0.5 text-xs font-semibold text-vp-text-muted">
+                {totalResults}
+              </span>
             </button>
           </li>
           {categories.map((cat) => (
             <li key={cat.id}>
               <button
-                className={`${styles.filterItem} ${filters.categoryId === cat.id ? styles.filterItemActive : ''}`}
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition ${
+                  filters.categoryId === cat.id
+                    ? 'bg-vp-primary/10 text-vp-primary ring-1 ring-vp-primary/30'
+                    : 'text-vp-text hover:bg-gray-100'
+                }`}
                 onClick={() => onFilterChange({ categoryId: cat.id })}
               >
                 <span>{cat.name}</span>
                 {cat.productCount !== undefined && (
-                  <span className={styles.filterBadge}>{cat.productCount}</span>
+                  <span className="rounded-full bg-black/5 px-2 py-0.5 text-xs font-semibold text-vp-text-muted">
+                    {cat.productCount}
+                  </span>
                 )}
               </button>
             </li>
@@ -51,9 +62,9 @@ const CatalogFilters: React.FC<CatalogFiltersProps> = ({
       </div>
 
       {/* Precio */}
-      <div className={styles.filterGroup}>
-        <h3 className={styles.filterTitle}>Precio máximo</h3>
-        <div className={styles.priceRange}>
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold uppercase tracking-wide text-vp-text">Precio máximo</h3>
+        <div className="rounded-xl border border-black/10 bg-white p-4 shadow-vp-sm">
           <input
             type="range"
             min={0}
@@ -61,11 +72,11 @@ const CatalogFilters: React.FC<CatalogFiltersProps> = ({
             step={50000}
             value={filters.maxPrice ?? 5000000}
             onChange={(e) => onFilterChange({ maxPrice: Number(e.target.value) })}
-            className={styles.rangeInput}
+            className="w-full accent-vp-primary"
           />
-          <div className={styles.priceLabels}>
+          <div className="mt-2 flex items-center justify-between text-xs text-vp-text-muted">
             <span>$0</span>
-            <span className={styles.priceValue}>
+            <span className="font-semibold text-vp-text">
               {filters.maxPrice
                 ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(filters.maxPrice)
                 : 'Sin límite'}
@@ -75,13 +86,14 @@ const CatalogFilters: React.FC<CatalogFiltersProps> = ({
       </div>
 
       {/* Disponibilidad */}
-      <div className={styles.filterGroup}>
-        <h3 className={styles.filterTitle}>Filtros</h3>
-        <label className={styles.checkLabel}>
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold uppercase tracking-wide text-vp-text">Filtros</h3>
+        <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-vp-text shadow-vp-sm">
           <input
             type="checkbox"
             checked={filters.featured === true}
             onChange={(e) => onFilterChange({ featured: e.target.checked ? true : undefined })}
+            className="accent-vp-primary"
           />
           <span>Solo productos destacados</span>
         </label>
@@ -90,7 +102,7 @@ const CatalogFilters: React.FC<CatalogFiltersProps> = ({
       {/* Limpiar */}
       {(filters.categoryId || filters.maxPrice || filters.featured) && (
         <button
-          className={styles.clearBtn}
+          className="w-full rounded-xl border border-vp-primary/30 bg-vp-primary/10 px-4 py-2 text-sm font-semibold text-vp-primary transition hover:bg-vp-primary hover:text-white"
           onClick={() => onFilterChange({ categoryId: undefined, maxPrice: undefined, featured: undefined })}
         >
           Limpiar filtros

@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
+import { ROUTES } from './paths';
 
 // Lazy load de páginas para mejor performance
 const HomePage = lazy(() => import('../pages/HomePage'));
@@ -36,16 +37,16 @@ const AppRouter: React.FC = () => {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Ruta raíz → Inicio */}
-          <Route path="/" element={<HomePage />} />
+          <Route path={ROUTES.home} element={<HomePage />} />
 
           {/* Catálogo general + filtros por URL */}
-          <Route path="/catalogo" element={<CatalogPage />} />
+          <Route path={ROUTES.catalog} element={<CatalogPage />} />
 
           {/* Detalle de producto */}
-          <Route path="/producto/:id" element={<ProductDetailPage />} />
+          <Route path={ROUTES.product} element={<ProductDetailPage />} />
 
           {/* Redirige rutas desconocidas al inicio */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={ROUTES.home} replace />} />
         </Routes>
       </Suspense>
     </MainLayout>

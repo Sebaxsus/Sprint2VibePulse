@@ -14,7 +14,7 @@ export function useProducts(initialFilters: ProductFilters = {}) {
       setError(null);
       const result = await productService.getProducts(filters);
       setProducts(result);
-    } catch (err) {
+    } catch {
       setError('Error al cargar los productos. Por favor intenta de nuevo.');
     } finally {
       setLoading(false);

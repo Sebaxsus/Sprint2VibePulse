@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================
    RESET
    ============================================ */
@@ -15,7 +19,7 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-family: var(--vp-font-body);
   background: #FAFAF9;
   color: #1A1A2E;
   line-height: 1.6;
@@ -63,7 +67,7 @@ a {
   --vp-radius-xl: 20px;
   --vp-nav-height: 68px;
   --vp-font-display: 'Syne', 'DM Sans', sans-serif;
-  --vp-font-body: 'DM Sans', system-ui, sans-serif;
+  --vp-font-body: 'DM Sans', sans-serif;
   --vp-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

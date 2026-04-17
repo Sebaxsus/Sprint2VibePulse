@@ -1,56 +1,30 @@
 import { Request, Response } from 'express';
-import { prismaConnector as prisma } from '../../db'
+import {
+  findFeaturedProducts,
+  findProductById,
+  findProducts,
+  ProductQueryFilters,
+} from '../services/productService';
 
 // GET /api/products
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const {
-      categoryId,
-      search,
-      minPrice,
-      maxPrice,
-      featured,
-      page = '1',
-      limit = '12',
-    } = req.query;
+    const { categoryId, search, minPrice, maxPrice, featured, page = '1', limit = '12' } = req.query;
 
-    const pageNum = Math.max(1, parseInt(page as string, 10));
-    const limitNum = Math.min(50, Math.max(1, parseInt(limit as string, 10)));
-    const skip = (pageNum - 1) * limitNum;
+    const pageNum = Math.max(1, Number.parseInt(String(page), 10));
+    const limitNum = Math.min(50, Math.max(1, Number.parseInt(String(limit), 10)));
 
-    const where: Record<string, unknown> = {};
+    const filters: ProductQueryFilters = {
+      categoryId: categoryId ? Number.parseInt(String(categoryId), 10) : undefined,
+      search: search ? String(search).trim() : undefined,
+      minPrice: minPrice ? Number.parseFloat(String(minPrice)) : undefined,
+      maxPrice: maxPrice ? Number.parseFloat(String(maxPrice)) : undefined,
+      featured: featured === 'true' ? true : undefined,
+      page: pageNum,
+      limit: limitNum,
+    };
 
-    if (categoryId) {
-      where.categoryId = parseInt(categoryId as string, 10);
-    }
-
-    if (search) {
-      where.OR = [
-        { name: { contains: search as string, mode: 'insensitive' } },
-        { description: { contains: search as string, mode: 'insensitive' } },
-      ];
-    }
-
-    if (minPrice || maxPrice) {
-      where.price = {};
-      if (minPrice) (where.price as Record<string, number>).gte = parseFloat(minPrice as string);
-      if (maxPrice) (where.price as Record<string, number>).lte = parseFloat(maxPrice as string);
-    }
-
-    if (featured === 'true') {
-      where.featured = true;
-    }
-
-    const [data, total] = await Promise.all([
-      prisma.product.findMany({
-        where,
-        include: { category: true },
-        skip,
-        take: limitNum,
-        orderBy: { createdAt: 'desc' },
-      }),
-      prisma.product.count({ where }),
-    ]);
+    const { data, total } = await findProducts(filters);
 
     res.json({
       success: true,
@@ -69,17 +43,14 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 // GET /api/products/:id
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(String(req.params.id), 10);
 
     if (isNaN(id)) {
       res.status(400).json({ success: false, message: 'ID inválido' });
       return;
     }
 
-    const product = await prisma.product.findUnique({
-      where: { id },
-      include: { category: true },
-    });
+    const product = await findProductById(id);
 
     if (!product) {
       res.status(404).json({ success: false, message: 'Producto no encontrado' });
@@ -96,12 +67,7 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 // GET /api/products/featured
 export const getFeaturedProducts = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const products = await prisma.product.findMany({
-      where: { featured: true },
-      include: { category: true },
-      orderBy: { createdAt: 'desc' },
-      take: 8,
-    });
+    const products = await findFeaturedProducts();
 
     res.json({ success: true, data: products });
   } catch (error) {
